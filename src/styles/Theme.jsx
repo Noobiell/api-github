@@ -38,7 +38,6 @@ export const theme = {
     secondary: "#FE8C00",
     container: "#2d2d2d",
     background: "#191919",
-    teste: "#258889"
   },
   fontFamily: {
     heading: ["IBM Plex Sans", "sans-serif"].join(","),
