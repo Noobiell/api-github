@@ -8,6 +8,7 @@ const round = (num) =>
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, "$1")
     .replace(/\.0$/, "");
+
 const rem = (px) => `${round(px / 16)}rem`;
 
 export const theme = {
@@ -35,6 +36,9 @@ export const theme = {
     gray900: "#141518",
     primary: "#F83600",
     secondary: "#FE8C00",
+    container: "#2d2d2d",
+    background: "#191919",
+    teste: "#258889"
   },
   fontFamily: {
     heading: ["IBM Plex Sans", "sans-serif"].join(","),
@@ -52,11 +56,24 @@ export const theme = {
     "3xl": rem(32),
     "4xl": rem(40),
     "5xl": rem(64),
+    subtitle: '1.25rem',
   },
+  breakPoints: {
+
+    xs: '0',
+    sm: '576px',
+    md: '768px',
+    lg: '992px',
+    xl: '1200px',
+    xxl: '1400px',
+
+  }
 };
 
 export function Theme({ children }) {
+
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+
 }
 
 Theme.propTypes = {
