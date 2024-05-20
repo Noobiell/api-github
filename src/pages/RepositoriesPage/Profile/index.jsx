@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { BsPeopleFill, BsGeoAltFill, BsSuitcaseLgFill, BsLink45Deg } from "react-icons/bs";
 import { Container, Header, Avatar, Login, Name, Inner, Data } from './style'
 
-function Profile() {
+function Profile({user}) {
 
   return (
 
@@ -11,10 +12,10 @@ function Profile() {
 
       <Header>
 
-        <Avatar src='https://avatars.githubusercontent.com/u/75146115?v=4' />
+        <Avatar src={user.avatar_url} />
 
-        <Login>Noobiell</Login>
-        <Name>Gabriel Oliveira</Name>
+        <Login>{user.login}</Login>
+        <Name>{user.name}</Name>
 
       </Header>
 
@@ -22,29 +23,60 @@ function Profile() {
 
         <Data>
           <BsPeopleFill size={15} />
-          30&nbsp;<i>seguidores</i>&nbsp; &middot; &nbsp;10 &nbsp;<i> seguindo</i>
+          {user.following}&nbsp;<i>seguidores</i>&nbsp; &middot; &nbsp;{user.followers} &nbsp;<i> seguindo</i>
         </Data>
 
-        <Data>
-          <BsSuitcaseLgFill size={15} />
-          Noobiel Dev
-        </Data>https://class.devsamurai.com.br/lectures/820
+        {user.company && (
 
-        <Data>
-          <BsGeoAltFill size={15} />
-          São Paulo - SP
-        </Data>
+          <Data>
+            <BsSuitcaseLgFill size={15} />
+            {user.company}
+          </Data>
 
-        <Data>
-          <BsLink45Deg size={15}/>
-          <a href='https://noobieldev.com.br'>https://noobieldev.com.br</a>
-        </Data>
+        )}
+
+        {
+          user.location &&(
+
+            <Data>
+              <BsGeoAltFill size={15} />
+              {user.location}
+            </Data>
+
+          )
+        }
+
+        {user.blog && (
+
+          <Data>
+            <BsLink45Deg size={15}/>
+            <a href={`\\${user.blog}`}>{user.blog}</a>
+          </Data>
+
+        )}
 
       </Inner>
 
     </Container>
 
   )
+
+}
+
+Profile.propTypes = {
+
+  user: PropTypes.shape({
+
+    name: PropTypes.string.isRequired,
+    login: PropTypes.string.isRequired,
+    avatar_url: PropTypes.string.isRequired,
+    followers: PropTypes.number.isRequired,
+    following: PropTypes.number.isRequired,
+    company: PropTypes.string,
+    blog: PropTypes.string,
+    location: PropTypes.string,
+
+  }).isRequired,
 
 }
 

@@ -1,22 +1,42 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Container, Name, Description, Footer, Lang, Link } from './style';
+import { Container, Name, Description, Footer, Lang, LinkPage } from './style';
 
-function Repository() {
+import { langColors } from '../../../../services/config';
+
+function Repository({repository}) {
+
+  const color = langColors[repository.language && repository.language.toLowerCase()];
+
   return (
-    <Container color='#f37272'>
+    <Container color={color}>
 
-      <Name>Repository Name</Name>
-      <Description>Repository Description</Description>
-      <Footer color='#f37272'>
+      <Name>{repository.name}</Name>
+      <Description>{repository.description}</Description>
+      <Footer color={color}>
 
-        <Lang>Ropository Lang</Lang>
-        <Link href='https?//noobieldev.com.br' target='_blank'>VER</Link>
+        <Lang>{repository.language}</Lang>
+        <LinkPage href={repository.html_url} target='_blank'>VER</LinkPage>
 
       </Footer>
 
     </Container>
   )
+}
+
+Repository.propTypes = {
+
+  repository: PropTypes.shape({
+
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      html_url: PropTypes.string.isRequired,
+      language: PropTypes.string,
+
+  }).isRequired
+
 }
 
 export default Repository

@@ -44,7 +44,7 @@ export const Lang = styled.span`
 
 `;
 
-export const Link = styled.a`
+export const LinkPage = styled.a`
 
   color: inherit;
   font-weight: bold;
