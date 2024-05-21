@@ -1,43 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Profile from './Profile';
 import Filter from './Filter';
 import Repositories from './Repositories';
 
-import { Container, Sidebar, Main } from './styles';
-import { getLangsFrom } from '../../services/api';
+import { Loading, Container, Sidebar, Main } from './styles';
+import { getUser, getRepos, getLangsFrom } from '../../services/api';
 
 function RepositoriesPage() {
 
+  const { login } = useParams();
+
+  const [user, setUser] = useState();
+  const [repositories, setRepositories] = useState();
+  const [languages, setLanguages] = useState();
   const [currentLanguage, setCurrentLanguage] = useState();
+  const [loading, setLoading] = useState(true);
 
-  const user = {
-    name: "Gabriel Oliveira",
-    login: "Noobiell",
-    avatar_url: "https://avatars.githubusercontent.com/u/75146115?v=4",
-    followers: 4,
-    following: 9,
-    company: null,
-    blog: "https://noobieldev.com.br/",
-    location: "São Paulo",
-  };
+  useEffect(()=>{
 
-  const repositories = [
+    const loadData = async ()=>{
 
-    {id: '1', name: 'Repo 1', description: 'Descrição 1', html_url: 'https://noobieldev.com.br/', language: 'Javascript'},
-    {id: '2', name: 'Repo 2', description: 'Descrição 2', html_url: 'https://noobieldev.com.br/', language: 'PHP'},
-    {id: '3', name: 'Repo 3', description: 'Descrição 3', html_url: 'https://noobieldev.com.br/', language: 'Javascript'},
-    {id: '4', name: 'Repo 4', description: 'Descrição 4', html_url: 'https://noobieldev.com.br/', language: 'Ruby'},
-    {id: '5', name: 'Repo 5', description: 'Descrição 5', html_url: 'https://noobieldev.com.br/', language: 'Ruby'},
-    {id: '6', name: 'Repo 6', description: 'Descrição 6', html_url: 'https://noobieldev.com.br/', language: 'Python'}
+      const [userResponse, repositoriesResponse] = await Promise.all([
 
-  ];
+        getUser(login),
+        getRepos(login)
 
-  const languages = getLangsFrom(repositories);
+      ]);
+
+      setUser(userResponse.data);
+      setRepositories(repositoriesResponse.data);
+      setLanguages(getLangsFrom(repositoriesResponse.data));
+
+      setLoading(false);
+
+    };
+
+    loadData();
+
+  }, []);
 
   const onFilterClick = (language) =>{
 
     setCurrentLanguage(language);
+
+  }
+
+  if(loading){
+
+    return <Loading>Carregando...</Loading>
 
   }
 
