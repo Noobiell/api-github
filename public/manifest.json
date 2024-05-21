@@ -1,6 +1,6 @@
 {
-  "short_name": "Aplicação React",
-  "name": "Template básico Dev Samurai",
+  "short_name": "Projeto API Github",
+  "name": "Projeto API Github",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#f37272",
+  "theme_color": "#493eda",
   "background_color": "#ffffff"
 }
